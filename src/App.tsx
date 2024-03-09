@@ -1,20 +1,28 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import formbricks from "@formbricks/js";
 
 function App() {
   const [userId, setUserId] = useState('');
+  const [email, setEmail] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const initializeFormbricks = () => {
-    if (typeof window !== "undefined") {
-      formbricks.init({
-        environmentId: "clth0x44u15myggxvrlb6cpoa",
-        apiHost: "https://app.formbricks.com",
-        userId: userId,
-      });
-    }
-  };
+    const initializeFormbricks = () => {
+      console.log("🚀 ~ initializeFormbricks ~ initializeFormbricks:")
+      if (typeof window !== "undefined") {
+        formbricks.init({
+          environmentId: "clth0x44u15myggxvrlb6cpoa",
+          apiHost: "https://app.formbricks.com",
+          userId: userId,
+          attributes: {
+            Plan: "premium",
+          },
+        });
+          console.log("🚀 ~ initializeFormbricks ~ userId:", userId)
+        console.log("🚀 ~ initializeFormbricks ~ email:", email)
+        formbricks.setEmail(email);
+      }
+    };
 
   const handleLogout = () => {
     formbricks.logout(); 
@@ -23,10 +31,11 @@ function App() {
   };
 
   const handleLogin = () => {
+    console.log("🚀 ~ handleLogin ~ handleLogin:")
     if (userId.trim() !== '') {
       setIsLoggedIn(true);
-      initializeFormbricks(); 
     }
+    initializeFormbricks();
   };
 
   const handleCssIdClick = () => {
@@ -65,6 +74,12 @@ function App() {
         </>
       ) : (
         <>
+        <input 
+          type='email'
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder='enter email'
+          />
           <input
             type="text"
             value={userId}
