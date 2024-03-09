@@ -6,7 +6,6 @@ function App() {
   const [userId, setUserId] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // Function to initialize Formbricks
   const initializeFormbricks = () => {
     if (typeof window !== "undefined") {
       formbricks.init({
@@ -17,22 +16,19 @@ function App() {
     }
   };
 
-  // Function to logout
   const handleLogout = () => {
-    formbricks.logout(); // No arguments needed
+    formbricks.logout(); 
     setIsLoggedIn(false);
     setUserId('');
   };
 
-  // Function to handle login
   const handleLogin = () => {
     if (userId.trim() !== '') {
       setIsLoggedIn(true);
-      initializeFormbricks(); // Initialize Formbricks after login
+      initializeFormbricks(); 
     }
   };
 
-  // Function to handle click on elements with the 'css-id' class
   const handleCssIdClick = () => {
     const button = document.querySelector('.css-id');
     console.log("🚀 ~ handleCssIdClick ~ button:", button)
@@ -41,15 +37,12 @@ function App() {
     }
   };
 
-  // useEffect to attach click event listener when component mounts
   useEffect(() => {
     const handleClick = (event: any) => {
       const { target } = event;
-      const cssSelector = '.css-id'; // Replace with your desired CSS selector
+      const cssSelector = '.css-id'; 
 
-      // Check if the clicked element matches the CSS selector
       if (target.matches(cssSelector)) {
-        // Trigger the action you want to perform
         handleCssIdClick();
       }
     };
@@ -59,12 +52,13 @@ function App() {
     return () => {
       document.removeEventListener('click', handleClick);
     };
-  }, []); // Empty dependency array to run the effect only once after mount
+  }, []); 
 
   return (
     <div>
       {isLoggedIn ? (
         <>
+          <button>Install App</button>
           <button onClick={() => formbricks.track("Button Clicked")}>Click Me</button>
           <button className="css-id">Click Me css id</button>
           <button onClick={handleLogout}>Logout</button>
